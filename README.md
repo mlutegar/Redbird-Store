@@ -5,7 +5,7 @@ Esse repositorio foi feito para o projeto integrador de desenvolvimento de um si
 Esse projeto tem como objetivo criar uma loja de roupa. 
 
 # Tecnologias utilizadas
-- Java 11
+- Java 17
 
 # Autores
 - Carlos (cadupomu)
