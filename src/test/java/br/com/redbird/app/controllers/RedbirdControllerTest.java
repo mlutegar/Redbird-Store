@@ -1,4 +1,4 @@
-package br.com.redbird.controllers;
+package br.com.redbird.app.controllers;
 
 public class RedbirdControllerTest {
 }
