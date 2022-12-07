@@ -45,4 +45,7 @@ public class Roupa {
     @Column(nullable = false)
     private Date dataUltimaAtualizacao;
 
+    public UUID getId() {
+        return productId;
+    }
 }
