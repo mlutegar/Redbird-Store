@@ -15,20 +15,22 @@ public class RoupaService {
         this.roupaRepository = roupaRepository;
     }
 
-    public Funcionario save(Funcionario funcionario) {
-        return funcionarioRepository.save(funcionario);
+    public Roupa save(Roupa roupa) {
+        return roupaRepository.save(roupa);
     }
 
-    public List<Funcionario> findAll() {
-        return funcionarioRepository.findAll();
+    public List<Roupa> findAll() {
+        return roupaRepository.findAll();
     }
 
-    public Funcionario findById(UUID id) {
-        return funcionarioRepository.findById(id).orElse(new Funcionario());
+    public Roupa findById(UUID id) {
+        return roupaRepository.findById(id).orElse(new Roupa());
     }
 
     public void deleteById(UUID id) {
-        funcionarioRepository.deleteById(id);
+        roupaRepository.deleteById(id);
     }
 
+    public Roupa findById(Long productId) {
+    }
 }
