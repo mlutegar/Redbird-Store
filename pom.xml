@@ -82,6 +82,12 @@
             <scope>test</scope>
         </dependency>
         <!-- /# JUnit -->
+        <!-- /# MOCK MVC -->
+        <dependency>
+            <groupId>org.springframework.restdocs</groupId>
+            <artifactId>spring-restdocs-mockmvc</artifactId>
+            <scope>test</scope>
+        </dependency>
         <!-- # Swagger -->
         <dependency>
             <groupId>org.springdoc</groupId>
