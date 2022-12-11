@@ -21,7 +21,7 @@ public class RedbirdApplication {
 
     private Info apiInfo() {
         return new Info()
-                .title("Rebird")
+                .title("Redbird")
                 .description("Sistema que gere o cadastro de roupas")
                 .version("1.0.0");
     }
