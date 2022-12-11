@@ -6,8 +6,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.opentest4j.AssertionFailedError;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -27,14 +27,13 @@ public class RedbirdServiceTest {
 
     @Test
     public void findAll() {
-        var roupa = new Roupa(1L, "Vestido", "azul", "marisa", "P", 22.10, 2, new Date(), new Date());
+        var roupa = new Roupa(UUID.randomUUID(), "Vestido", "azul", "marisa", "P", 22.10, 2, new Date(), new Date());
         roupaRepository.save(roupa);
 
         var roupaService = new RoupaService(roupaRepository);
         List<Roupa> roupaList = roupaService.findAll();
         var lastRoupa = roupaList.get(roupaList.size() - 1);
 
-        assertEquals(roupa.getProductId(), lastRoupa.getProductId());
         assertEquals(roupa.getNome(), lastRoupa.getNome());
         assertEquals(roupa.getCor(), lastRoupa.getCor());
         assertEquals(roupa.getMarca(), lastRoupa.getMarca());
@@ -47,7 +46,7 @@ public class RedbirdServiceTest {
 
     @Test
     public void findById() {
-        var roupaSaved = roupaRepository.save(new Roupa(1L, "Vestido", "azul", "marisa", "P", 22.10, 2, new Date(), new Date()));
+        var roupaSaved = roupaRepository.save(new Roupa(UUID.randomUUID(), "Vestido", "azul", "marisa", "P", 22.10, 2, new Date(), new Date()));
 
         var roupaService = new RoupaService(roupaRepository);
         var roupaFinded = roupaService.findById(roupaSaved.getProductId());
@@ -64,8 +63,8 @@ public class RedbirdServiceTest {
     }
 
     @Test
-    public void deleteById(UUID id) {
-        var roupaSaved = roupaRepository.save(new Roupa(1L, "Vestido", "azul", "marisa", "P", 22.10, 2, new Date(), new Date()));
+    public void deleteById() {
+        var roupaSaved = roupaRepository.save(new Roupa(UUID.randomUUID(), "Vestido", "azul", "marisa", "P", 22.10, 2, new Date(), new Date()));
 
         var roupaService = new RoupaService(roupaRepository);
         var roupaFinded = roupaService.findById(roupaSaved.getProductId());
@@ -82,10 +81,11 @@ public class RedbirdServiceTest {
     }
 
     @Test
-    public void saveRoupa(Roupa roupa) {
+    public void saveRoupa() {
         var roupaService = new RoupaService(roupaRepository);
+        var roupa = new Roupa(UUID.randomUUID(), "Vestido", "azul", "marisa", "P", 22.10, 2, new Date(), new Date());
 
-        roupaService.save(roupa);
+        roupaService.saveRoupa(roupa);
         assertEquals(1.0, roupaRepository.count());
     }
 
@@ -94,7 +94,7 @@ public class RedbirdServiceTest {
         var roupaService = new RoupaService(roupaRepository);
         var roupa = new Roupa(UUID.randomUUID(), "Vestido", "azul", "marisa", "P", 22.10, 2, new Date(), new Date());
 
-        var roupaSaved = roupaService.save(roupa);
+        var roupaSaved = roupaService.saveRoupa(roupa);
         roupaService.deleteById(roupaSaved.getId());
 
         assertEquals(0, roupaRepository.count());
