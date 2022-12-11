@@ -43,10 +43,24 @@ public class RoupaController {
         return new ResponseEntity<>(roupaService.findById(id), OK);
     }
 
+    @PutMapping(value = "/roupa", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Atualiza uma roupa", responses = {@ApiResponse(description = "Sucesso ao atualizar", responseCode = "204")})
+    ResponseEntity<?> update(@RequestBody Roupa roupa) {
+        roupaService.saveRoupa(roupa);
+        return new ResponseEntity<>(NO_CONTENT);
+    }
+
+    @PatchMapping(value = "/roupa", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Atualiza a marca da roupa", responses = {@ApiResponse(description = "Sucesso ao atualizar", responseCode = "204")})
+    ResponseEntity<?> updateMarca(@RequestParam UUID id, @RequestParam String marca) {
+        roupaService.update(id, marca);
+        return new ResponseEntity<>(NO_CONTENT);
+    }
+
     @DeleteMapping("roupa/{id}")
     @Operation(summary = "Delete a roupa", responses = {@ApiResponse(description = "Sucesso ao deletar a peça de roupa", responseCode = "204")})
-    ResponseEntity<?> delete(@PathVariable long id) {
-        //roupaService.deleteById(id);
+    ResponseEntity<?> delete(@RequestParam UUID id) {
+        roupaService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
