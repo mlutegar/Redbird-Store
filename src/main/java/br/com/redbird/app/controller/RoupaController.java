@@ -28,18 +28,26 @@ public class RoupaController {
     @PostMapping(value = "/roupa", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Cadastra uma peça de roupa", responses = {@ApiResponse(description = "Sucesso ao cadastrar", responseCode = "201", content = @Content)})
     ResponseEntity<Roupa> save(@RequestBody Roupa roupa) {
-        return new ResponseEntity<>(roupaService.save(roupa), CREATED);
+        return new ResponseEntity<>(roupaService.saveRoupa(roupa), CREATED);
     }
 
-    @GetMapping(value = "/roupa", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/roupas", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Lista de peças de roupa", responses = {@ApiResponse(description = "Sucesso ao listar as peças de roupa", responseCode = "200", content = @Content)})
     ResponseEntity<List<Roupa>> findAll() {
         return new ResponseEntity<>(roupaService.findAll(), OK);
     }
 
-    @GetMapping(value = "/roupa/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/roupa/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Localiza uma roupa pelo ID", responses = {@ApiResponse(description = "Sucesso ao consultar a peça de roupa", responseCode = "200", content = @Content)})
     ResponseEntity<Roupa> findById(@PathVariable UUID id) {
         return new ResponseEntity<>(roupaService.findById(id), OK);
     }
+
+    @DeleteMapping("roupa/{id}")
+    @Operation(summary = "Delete a roupa", responses = {@ApiResponse(description = "Sucesso ao deletar a peça de roupa", responseCode = "204")})
+    ResponseEntity<?> delete(@PathVariable long id) {
+        //roupaService.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }
