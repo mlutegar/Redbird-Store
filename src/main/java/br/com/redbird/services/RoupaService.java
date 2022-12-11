@@ -15,7 +15,7 @@ public class RoupaService {
         this.roupaRepository = roupaRepository;
     }
 
-    public Roupa save(Roupa roupa) {
+    public Roupa saveRoupa(Roupa roupa) {
         return roupaRepository.save(roupa);
     }
 
@@ -29,8 +29,5 @@ public class RoupaService {
 
     public void deleteById(UUID id) {
         roupaRepository.deleteById(id);
-    }
-
-    public Roupa findById(Long productId) {
     }
 }
