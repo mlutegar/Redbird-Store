@@ -31,7 +31,7 @@ public class RoupaService {
         roupaRepository.deleteById(id);
     }
 
-    public void update(UUID id, String marca) {
+    public void saveRoupa(UUID id, String marca) {
         roupaRepository.updateMarca(id, marca);
     }
 }

@@ -53,7 +53,7 @@ public class RoupaController {
     @PatchMapping(value = "/roupa", consumes = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Atualiza a marca da roupa", responses = {@ApiResponse(description = "Sucesso ao atualizar", responseCode = "204")})
     ResponseEntity<?> updateMarca(@RequestParam UUID id, @RequestParam String marca) {
-        roupaService.update(id, marca);
+        roupaService.saveRoupa(id, marca);
         return new ResponseEntity<>(NO_CONTENT);
     }
 

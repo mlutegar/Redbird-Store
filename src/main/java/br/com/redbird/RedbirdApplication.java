@@ -14,15 +14,4 @@ public class RedbirdApplication {
         SpringApplication.run(RedbirdApplication.class, args);
     }
 
-    @Bean
-    public OpenAPI openApiConfig() {
-        return new OpenAPI().info(apiInfo());
-    }
-
-    private Info apiInfo() {
-        return new Info()
-                .title("Redbird")
-                .description("Sistema que gere o cadastro de roupas")
-                .version("1.0.0");
-    }
 }
