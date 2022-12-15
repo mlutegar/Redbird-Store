@@ -52,26 +52,33 @@ public class RedBirdControllerTest {
 
     @Test
     void getRoupa() throws Exception {
-        var roupa = new Roupa(UUID.randomUUID(), "Vestido", "azul", "marisa", "P", 22.10, 2, new Date(), new Date());
+        var roupa = new Roupa(UUID.fromString("0bc5e75e-1098-4634-a935-a9a2e7e8aacf"), "Vestido", "azul", "marisa", "P", 22.10, 2, new Date(), new Date());
         Mockito.when(roupaService.findById(roupa.getProductId())).thenReturn(roupa);
 
-        mockMvc.perform(get("/redbird/roupa/1" + roupa.getProductId()).contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/redbird/roupa/id/" + roupa.getProductId()).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().json(new ObjectMapper().writeValueAsString(roupa))).andExpect(status().isOk()).andDo(print());
     }
 
     @Test
     void createRoupa() throws Exception {
         var roupa = new Roupa(UUID.randomUUID(), "Vestido", "azul", "marisa", "P", 22.10, 2, new Date(), new Date());
-        Mockito.when(roupaService.findById(any(UUID.class))).thenReturn(roupa);
+        Mockito.when(roupaService.saveRoupa(any(Roupa.class))).thenReturn(roupa);
 
-        mockMvc.perform(
-                        get("/redbird/roupa").contentType(MediaType.APPLICATION_JSON)
-                )
-                .andExpect(content().json(new ObjectMapper().writeValueAsString(roupa), false))
-                .andExpect(status().isOk())
-                .andDo(print());
+        var mapper = new ObjectMapper();
+        var jsonToDo = mapper.writeValueAsString(roupa);
+
+        var resultActions = mockMvc.perform(
+                post("/redbird/roupa")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonToDo)
+        );
+
+        resultActions
+                .andExpect(status().isCreated())
+                .andExpect(content().json(jsonToDo))
+                .andExpect(jsonPath("$.nome").value("Vestido"));
     }
-    
+
     @Test
     void editRoupa() throws Exception {
         var roupa = new Roupa(UUID.randomUUID(), "Vestido", "azul", "marisa", "P", 22.10, 2, new Date(), new Date());
@@ -97,6 +104,6 @@ public class RedBirdControllerTest {
         var roupaServiceMock = mock(RoupaService.class);
         doNothing().when(roupaServiceMock).deleteById(any(UUID.class));
 
-        mockMvc.perform(delete("/redbird/roupa/{id}?1").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isNoContent());
+        mockMvc.perform(delete("/redbird/roupa/id/?id=0bc5e75e-1098-4634-a935-a9a2e7e8aacf").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isNoContent());
     }
 }
