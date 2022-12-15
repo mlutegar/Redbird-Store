@@ -16,6 +16,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +46,7 @@ public class RedBirdControllerTest {
         roupaList.add(new Roupa(UUID.randomUUID(), "Vestido", "azul", "marisa", "P", 22.10, 2, new Date(), new Date()));
         Mockito.when(roupaService.findAll()).thenReturn(roupaList);
 
-        mockMvc.perform(get("/roupas").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/redbird/roupas").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$", Matchers.hasSize(2))).andDo(print());
     }
 
@@ -53,7 +55,7 @@ public class RedBirdControllerTest {
         var roupa = new Roupa(UUID.randomUUID(), "Vestido", "azul", "marisa", "P", 22.10, 2, new Date(), new Date());
         Mockito.when(roupaService.findById(roupa.getProductId())).thenReturn(roupa);
 
-        mockMvc.perform(get("/roupa/1" + roupa.getProductId()).contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/redbird/roupa/1" + roupa.getProductId()).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().json(new ObjectMapper().writeValueAsString(roupa))).andExpect(status().isOk()).andDo(print());
     }
 
@@ -63,14 +65,13 @@ public class RedBirdControllerTest {
         Mockito.when(roupaService.findById(any(UUID.class))).thenReturn(roupa);
 
         mockMvc.perform(
-                        get("/roupa").contentType(MediaType.APPLICATION_JSON)
+                        get("/redbird/roupa").contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(content().json(new ObjectMapper().writeValueAsString(roupa), false))
                 .andExpect(status().isOk())
                 .andDo(print());
     }
-
-
+    
     @Test
     void editRoupa() throws Exception {
         var roupa = new Roupa(UUID.randomUUID(), "Vestido", "azul", "marisa", "P", 22.10, 2, new Date(), new Date());
@@ -80,7 +81,7 @@ public class RedBirdControllerTest {
         var jsonToDo = mapper.writeValueAsString(roupa);
 
         var resultActions = mockMvc.perform(
-                post("/roupa")
+                post("/redbird/roupa")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonToDo)
         );
@@ -96,6 +97,6 @@ public class RedBirdControllerTest {
         var roupaServiceMock = mock(RoupaService.class);
         doNothing().when(roupaServiceMock).deleteById(any(UUID.class));
 
-        mockMvc.perform(delete("/roupa/1").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isNoContent());
+        mockMvc.perform(delete("/redbird/roupa/{id}?1").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isNoContent());
     }
 }
