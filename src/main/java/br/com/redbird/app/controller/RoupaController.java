@@ -63,5 +63,4 @@ public class RoupaController {
         roupaService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
-
 }

@@ -95,7 +95,7 @@ public class RedbirdServiceTest {
         var roupa = new Roupa(UUID.randomUUID(), "Vestido", "azul", "marisa", "P", 22.10, 2, new Date(), new Date());
 
         var roupaSaved = roupaService.saveRoupa(roupa);
-        roupaService.deleteById(roupaSaved.getId());
+        roupaService.deleteById(roupaSaved.getProductId());
 
         assertEquals(0, roupaRepository.count());
     }
