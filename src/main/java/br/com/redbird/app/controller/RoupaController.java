@@ -57,7 +57,7 @@ public class RoupaController {
         return new ResponseEntity<>(NO_CONTENT);
     }
 
-    @DeleteMapping("roupa/{id}")
+    @DeleteMapping("/roupa/{id}")
     @Operation(summary = "Delete a roupa", responses = {@ApiResponse(description = "Sucesso ao deletar a peça de roupa", responseCode = "204")})
     ResponseEntity<?> delete(@RequestParam UUID id) {
         roupaService.deleteById(id);
