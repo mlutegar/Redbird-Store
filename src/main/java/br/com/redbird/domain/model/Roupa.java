@@ -5,7 +5,11 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 
@@ -40,8 +44,10 @@ public class Roupa {
     private int quantidade;
 
     @Column(nullable = false)
-    private Date dataRegistro;
+    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    private Timestamp dataRegistro;
 
     @Column(nullable = false)
-    private Date dataUltimaAtualizacao;
+    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    private Timestamp dataUltimaAtualizacao;
 }

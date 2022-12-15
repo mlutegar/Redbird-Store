@@ -6,9 +6,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.opentest4j.AssertionFailedError;
 
-import java.util.Date;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,7 +27,7 @@ public class RedbirdServiceTest {
 
     @Test
     public void findAll() {
-        var roupa = new Roupa(UUID.randomUUID(), "Vestido", "azul", "marisa", "P", 22.10, 2, new Date(), new Date());
+        var roupa = new Roupa(UUID.randomUUID(), "Vestido", "azul", "marisa", "P", 22.10, 2, Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(LocalDateTime.now()));
         roupaRepository.save(roupa);
 
         var roupaService = new RoupaService(roupaRepository);
@@ -40,13 +40,11 @@ public class RedbirdServiceTest {
         assertEquals(roupa.getTamanho(), lastRoupa.getTamanho());
         assertEquals(roupa.getPreco(), lastRoupa.getPreco());
         assertEquals(roupa.getQuantidade(), lastRoupa.getQuantidade());
-        assertEquals(roupa.getDataRegistro(), lastRoupa.getDataRegistro());
-        assertEquals(roupa.getDataUltimaAtualizacao(), lastRoupa.getDataUltimaAtualizacao());
     }
 
     @Test
     public void findById() {
-        var roupaSaved = roupaRepository.save(new Roupa(UUID.randomUUID(), "Vestido", "azul", "marisa", "P", 22.10, 2, new Date(), new Date()));
+        var roupaSaved = roupaRepository.save(new Roupa(UUID.randomUUID(), "Vestido", "azul", "marisa", "P", 22.10, 2, Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(LocalDateTime.now())));
 
         var roupaService = new RoupaService(roupaRepository);
         var roupaFinded = roupaService.findById(roupaSaved.getProductId());
@@ -58,13 +56,11 @@ public class RedbirdServiceTest {
         assertEquals(roupaSaved.getTamanho(), roupaFinded.getTamanho());
         assertEquals(roupaSaved.getPreco(), roupaFinded.getPreco());
         assertEquals(roupaSaved.getQuantidade(), roupaFinded.getQuantidade());
-        assertEquals(roupaSaved.getDataRegistro(), roupaFinded.getDataRegistro());
-        assertEquals(roupaSaved.getDataUltimaAtualizacao(), roupaFinded.getDataUltimaAtualizacao());
     }
 
     @Test
     public void deleteById() {
-        var roupaSaved = roupaRepository.save(new Roupa(UUID.randomUUID(), "Vestido", "azul", "marisa", "P", 22.10, 2, new Date(), new Date()));
+        var roupaSaved = roupaRepository.save(new Roupa(UUID.randomUUID(), "Vestido", "azul", "marisa", "P", 22.10, 2, Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(LocalDateTime.now())));
 
         var roupaService = new RoupaService(roupaRepository);
         var roupaFinded = roupaService.findById(roupaSaved.getProductId());
@@ -76,14 +72,12 @@ public class RedbirdServiceTest {
         assertEquals(roupaSaved.getTamanho(), roupaFinded.getTamanho());
         assertEquals(roupaSaved.getPreco(), roupaFinded.getPreco());
         assertEquals(roupaSaved.getQuantidade(), roupaFinded.getQuantidade());
-        assertEquals(roupaSaved.getDataRegistro(), roupaFinded.getDataRegistro());
-        assertEquals(roupaSaved.getDataUltimaAtualizacao(), roupaFinded.getDataUltimaAtualizacao());
     }
 
     @Test
     public void saveRoupa() {
         var roupaService = new RoupaService(roupaRepository);
-        var roupa = new Roupa(UUID.randomUUID(), "Vestido", "azul", "marisa", "P", 22.10, 2, new Date(), new Date());
+        var roupa = new Roupa(UUID.randomUUID(), "Vestido", "azul", "marisa", "P", 22.10, 2, Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(LocalDateTime.now()));
 
         roupaService.saveRoupa(roupa);
         assertEquals(1.0, roupaRepository.count());
@@ -92,7 +86,7 @@ public class RedbirdServiceTest {
     @Test
     void deleteRoupa() {
         var roupaService = new RoupaService(roupaRepository);
-        var roupa = new Roupa(UUID.randomUUID(), "Vestido", "azul", "marisa", "P", 22.10, 2, new Date(), new Date());
+        var roupa = new Roupa(UUID.randomUUID(), "Vestido", "azul", "marisa", "P", 22.10, 2, Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(LocalDateTime.now()));
 
         var roupaSaved = roupaService.saveRoupa(roupa);
         roupaService.deleteById(roupaSaved.getProductId());

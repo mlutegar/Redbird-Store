@@ -4,7 +4,8 @@ import br.com.redbird.domain.model.Roupa;
 import br.com.redbird.services.RoupaService;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Date;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
@@ -16,9 +17,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -42,8 +42,8 @@ public class RedBirdControllerTest {
     @Test
     void getAllRoupas() throws Exception {
         List<Roupa> roupaList = new ArrayList<>();
-        roupaList.add(new Roupa(UUID.randomUUID(), "Vestido", "azul", "marisa", "P", 22.10, 2, new Date(), new Date()));
-        roupaList.add(new Roupa(UUID.randomUUID(), "Vestido", "azul", "marisa", "P", 22.10, 2, new Date(), new Date()));
+        roupaList.add(new Roupa(UUID.randomUUID(), "Vestido", "azul", "marisa", "P", 22.10, 2, Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(LocalDateTime.now())));
+        roupaList.add(new Roupa(UUID.randomUUID(), "Vestido", "azul", "marisa", "P", 22.10, 2, Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(LocalDateTime.now())));
         Mockito.when(roupaService.findAll()).thenReturn(roupaList);
 
         mockMvc.perform(get("/redbird/roupas").contentType(MediaType.APPLICATION_JSON))
@@ -52,7 +52,7 @@ public class RedBirdControllerTest {
 
     @Test
     void getRoupa() throws Exception {
-        var roupa = new Roupa(UUID.fromString("0bc5e75e-1098-4634-a935-a9a2e7e8aacf"), "Vestido", "azul", "marisa", "P", 22.10, 2, new Date(), new Date());
+        var roupa = new Roupa(UUID.fromString("0bc5e75e-1098-4634-a935-a9a2e7e8aacf"), "Vestido", "azul", "marisa", "P", 22.10, 2, Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(LocalDateTime.now()));
         Mockito.when(roupaService.findById(roupa.getProductId())).thenReturn(roupa);
 
         mockMvc.perform(get("/redbird/roupa/id/" + roupa.getProductId()).contentType(MediaType.APPLICATION_JSON))
@@ -61,7 +61,7 @@ public class RedBirdControllerTest {
 
     @Test
     void createRoupa() throws Exception {
-        var roupa = new Roupa(UUID.randomUUID(), "Vestido", "azul", "marisa", "P", 22.10, 2, new Date(), new Date());
+        var roupa = new Roupa(UUID.randomUUID(), "Vestido", "azul", "marisa", "P", 22.10, 2, Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(LocalDateTime.now()));
         Mockito.when(roupaService.saveRoupa(any(Roupa.class))).thenReturn(roupa);
 
         var mapper = new ObjectMapper();
@@ -81,7 +81,7 @@ public class RedBirdControllerTest {
 
     @Test
     void editRoupa() throws Exception {
-        var roupa = new Roupa(UUID.randomUUID(), "Vestido", "azul", "marisa", "P", 22.10, 2, new Date(), new Date());
+        var roupa = new Roupa(UUID.randomUUID(), "Vestido", "azul", "marisa", "P", 22.10, 2, Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(LocalDateTime.now()));
         Mockito.when(roupaService.saveRoupa(any(Roupa.class))).thenReturn(roupa);
 
         var mapper = new ObjectMapper();
