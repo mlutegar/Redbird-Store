@@ -37,7 +37,7 @@ public class RoupaController {
         return new ResponseEntity<>(roupaService.findAll(), OK);
     }
 
-    @GetMapping(value = "/roupa/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/roupa/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Localiza uma roupa pelo ID", responses = {@ApiResponse(description = "Sucesso ao consultar a peça de roupa", responseCode = "200", content = @Content)})
     ResponseEntity<Roupa> findById(@PathVariable UUID id) {
         return new ResponseEntity<>(roupaService.findById(id), OK);
@@ -50,10 +50,10 @@ public class RoupaController {
         return new ResponseEntity<>(NO_CONTENT);
     }
 
-    @PatchMapping(value = "/roupa", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PatchMapping(value = "/roupa")
     @Operation(summary = "Atualiza a marca da roupa", responses = {@ApiResponse(description = "Sucesso ao atualizar", responseCode = "204")})
     ResponseEntity<?> updateMarca(@RequestParam UUID id, @RequestParam String marca) {
-        roupaService.saveRoupa(id, marca);
+        roupaService.update(id, marca);
         return new ResponseEntity<>(NO_CONTENT);
     }
 
